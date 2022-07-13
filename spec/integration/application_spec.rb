@@ -27,19 +27,19 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
+  # context "GET /albums" do
+  #   it 'return a list of albums' do
+  #     response = get('/albums')
+
+  #     all_albums = "Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring"
+
+  #     expect(response.status).to eq(200)
+  #     expect(response.body).to eq(all_albums)
+  #   end
+  # end
+
   context "GET /albums" do
-    it 'return a list of albums' do
-      response = get('/albums')
-
-      all_albums = "Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring"
-
-      expect(response.status).to eq(200)
-      expect(response.body).to eq(all_albums)
-    end
-  end
-
-  context "GET /albums" do
-    it 'returns 200 OK and all the albums' do
+    it 'all the albums as an HTML page' do
       response = get('/albums')
 
       expect(response.status).to eq(200)
@@ -47,6 +47,7 @@ describe Application do
       expect(response.body).to include('Title: Doolittle')
       expect(response.body).to include('<a href="/albums/2">')
       expect(response.body).to include('<a href="/albums/3">')
+      expect(response.body).to include('<a href="/albums/4">')
     end
   end
 
