@@ -1,5 +1,6 @@
 # file: app.rb
 require 'sinatra'
+require 'sinatra/base'
 require "sinatra/reloader"
 require_relative 'lib/database_connection'
 require_relative 'lib/album_repository'
@@ -36,6 +37,16 @@ class Application < Sinatra::Base
     repo.create(new_album)
 
     return ''
+  end
+
+  get '/albums/:id' do
+    album_repo = AlbumRepository.new
+    artist_repo = ArtistRepository.new
+
+    @album = album_repo.find(params[:id])
+    @artist = artist_repo.find(@album.artist_id)
+    
+    return erb(:album_id)
   end
 
   get '/artists' do

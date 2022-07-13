@@ -38,6 +38,28 @@ describe Application do
     end
   end
 
+  context 'GET /albums/:id' do
+    it 'returns information about album 1' do
+      # Assuming the post with id 1 exists.
+      response = get('/albums/1')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Doolittle</h1>")
+      expect(response.body).to include("<p>Release year: 1989</p>")
+      expect(response.body).to include("<p>Artist: Pixies")
+    end
+
+    it 'returns information about album 2' do
+      # Assuming the post with id 2 exists.
+      response = get('/albums/2')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Surfer Rosa</h1>")
+      expect(response.body).to include("<p>Release year: 1988</p>")
+      expect(response.body).to include("<p>Artist: Pixies</p>")
+    end
+  end
+
   context "POST /albums" do
     it "creates a new album" do
       response = post("albums", title: "Voyage", release_year: 2022, artist_id: 2)
