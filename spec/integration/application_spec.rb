@@ -38,6 +38,18 @@ describe Application do
     end
   end
 
+  context "GET /albums" do
+    it 'returns 200 OK and all the albums' do
+      response = get('/albums')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Albums</h1>')
+      expect(response.body).to include('Title: Doolittle')
+      expect(response.body).to include('<a href="/albums/2">')
+      expect(response.body).to include('<a href="/albums/3">')
+    end
+  end
+
   context 'GET /albums/:id' do
     it 'returns information about album 1' do
       # Assuming the post with id 1 exists.
