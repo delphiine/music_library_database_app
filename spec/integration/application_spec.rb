@@ -71,7 +71,7 @@ describe Application do
       expect(response.body).to include("<p>Release year: 1988</p>")
       expect(response.body).to include("<p>Artist: Pixies</p>")
     end
-  end
+  end 
 
   context "POST /albums" do
     it "creates a new album" do
