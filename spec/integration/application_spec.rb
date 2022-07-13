@@ -27,19 +27,8 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
-  # context "GET /albums" do
-  #   it 'return a list of albums' do
-  #     response = get('/albums')
-
-  #     all_albums = "Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring"
-
-  #     expect(response.status).to eq(200)
-  #     expect(response.body).to eq(all_albums)
-  #   end
-  # end
-
   context "GET /albums" do
-    it 'all the albums as an HTML page' do
+    it 'all albums on a HTML page with links to album info' do
       response = get('/albums')
 
       expect(response.status).to eq(200)
@@ -86,14 +75,25 @@ describe Application do
   end
 
   context "GET /artists" do
-    it 'returns 200 OK and a list of artists' do
-      # Assuming the post with id 1 exists.
-      response = get('/artists')
-
-      expected_response = "Pixies, ABBA, Taylor Swift, Nina Simone"
+    it "returns an HTML page with the list of artists, and links for each artist listed" do
+      response = get('/artists') 
 
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include('<h1>Artists</h1>')
+      expect(response.body).to include('Pixies</a>')
+      expect(response.body).to include('<a href="/artists/ 2">')
+      expect(response.body).to include('<a href="/artists/ 3">')
+      expect(response.body).to include('<a href="/artists/ 4">')
+    end
+  end
+
+  context "GET /artists/:id" do
+    it "returns an HTML page showing details for a single artist" do
+      response = get('/artists/1')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Pixies</h1>')
+      expect(response.body).to include('<p>Genre: Rock</p>')
     end
   end
 
