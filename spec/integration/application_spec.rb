@@ -62,6 +62,18 @@ describe Application do
     end
   end 
 
+  context "GET /albums/new" do
+    it "implements a form page to add a new album" do
+      response = get("/albums/new")
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/albums">')
+      expect(response.body).to include('<input type="text" name="album_title" />')
+      expect(response.body).to include('<input type="text" name="album_release_year" />')
+      expect(response.body).to include('<input type="text" name="album_artist_id" />')
+    end
+  end
+
   context "POST /albums" do
     it "creates a new album" do
       response = post("albums", title: "Voyage", release_year: 2022, artist_id: 2)
@@ -73,6 +85,7 @@ describe Application do
       expect(response.body).to include("Voyage")
     end
   end
+
 
   context "GET /artists" do
     it "returns an HTML page with the list of artists, and links for each artist listed" do
@@ -97,9 +110,19 @@ describe Application do
     end
   end
 
+  context "GET /artists/new" do
+    it "implements a form page to add a new artist" do
+      response = get("/artists/new")
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/artists">')
+      expect(response.body).to include('<input type="text" name="artist_name" />')
+      expect(response.body).to include('<input type="text" name="artist_genre" />')
+    end
+  end
+
   context "POST /artists" do
     it 'creates a new artists object and returns 200 OK' do
-      # Assuming the post with id 1 exists.
       response = post('/artists', name: "Wild nothing", genre: "Indie")
 
       expect(response.status).to eq(200)
